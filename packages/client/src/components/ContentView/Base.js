@@ -2,6 +2,7 @@ import React, { useEffect, memo } from 'react';
 import Prism from 'prismjs';
 import classnames from 'classnames';
 import { setup as setupWebSlides } from '../../setup/webSlides';
+import { VFXProvider } from 'react-vfx';
 
 const articleClass = process.env.IS_VERTICAL ? 'vertical' : undefined;
 let mermaid = null;
@@ -76,20 +77,22 @@ export const Base = memo(
     }
 
     return (
-      <article className={articleClass} id="webslides">
-        {slides.map(({ slide: Slide, fusumaProps }, i) => (
-          <section
-            key={i}
-            className={classnames(
-              'aligncenter',
-              fusumaProps.classes,
-              fusumaProps.sectionTitle ? 'section-title' : undefined
-            )}
-          >
-            <Slide />
-          </section>
-        ))}
-      </article>
+      <VFXProvider pixelRatio={1.5}>
+        <article className={articleClass} id="webslides">
+          {slides.map(({ slide: Slide, fusumaProps }, i) => (
+            <section
+              key={i}
+              className={classnames(
+                'aligncenter',
+                fusumaProps.classes,
+                fusumaProps.sectionTitle ? 'section-title' : undefined
+              )}
+            >
+              <Slide />
+            </section>
+          ))}
+        </article>
+      </VFXProvider>
     );
   },
   (prevProps, nextProps) => prevProps.hash === nextProps.hash
